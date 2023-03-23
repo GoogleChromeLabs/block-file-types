@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Block File Types",
+  "version": "0.0.1",
+  "author": "Clay Smith",
+  "short_name": "Block File Types",
+  "default_locale": "en",
+  "description": "Block File Types",
+  "icons": {
+    "19": "images/19.png",
+    "32": "images/32.png",
+    "38": "images/38.png",
+    "36": "images/36.png",
+    "64": "images/64.png",
+    "128": "images/128.png"
+  },
+  "permissions": [],
+  "host_permissions": [
+    "file://*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "file://*"
+      ],
+      "exclude_matches": [],
+      "js": [
+        "contentscript.js"
+      ]
+    }
+  ]
+}

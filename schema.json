@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "blocktypes": {
+      "title": "Block File types",
+      "description": "Block File types",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
