@@ -23,17 +23,5 @@
   },
   "storage": {
     "managed_schema": "schema.json"
-  },
-  "content_scripts": [
-    {
-      "run_at": "document_start",
-      "matches": [
-        "file://*"
-      ],
-      "exclude_matches": [],
-      "js": [
-        "contentscript.js"
-      ]
-    }
-  ]
+  }
 }

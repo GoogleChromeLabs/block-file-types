@@ -13,9 +13,78 @@
 * limitations under the License. */
 
 /**
+ * Block file message
+ */
+const newHTML = `<html>
+<head>
+  <title>Blocked File</title>
+</head>
+<body>
+  <p>This file type is not allowed.</p>
+</body>
+</html>`;
+
+/**
  * Set the blocked file types in the storage
  */
 chrome.storage.managed.get('blocktypes', function (data) {
   data.type = 'blocktypes';
   chrome.storage.local.set(data);
 });
+
+/**
+ * Listen for activated tab and check the url
+ */
+chrome.tabs.onActivated.addListener((req) => {
+  chrome.tabs.get(req.tabId, (res) => {
+    checkUrl(res);
+  })
+})
+
+/**
+ * Listen for tab to be updated and check the url
+ */
+chrome.tabs.onUpdated.addListener(req => {
+  chrome.tabs.get(req, (res) => {
+    checkUrl(res);
+  })
+})
+
+/**
+ * Check the url of the tab and block if it is a file://
+ * and matches the file extension.
+ * @param {Tab} res
+ * @returns
+ */
+async function checkUrl(res) {
+  const filetypes = await getStorage('blocktypes');
+  if (!filetypes || filetypes.length == 0) return
+  let block = false
+  filetypes.forEach(type => {
+    const ext = `${type}$`;
+    const re = new RegExp(ext);
+    const schema = new RegExp('file://');
+    if (!block) {
+      if (schema.test(res.url) && re.test(res.url)) {
+        block = true;
+      }
+    }
+  })
+  if (!block) return;
+  chrome.tabs.remove(res.tabId);
+  const newurl = "data:text/html," + encodeURIComponent(newHTML);
+  chrome.tabs.create({ url: newurl });
+}
+
+/**
+ * Get the values from Storage
+ * @param {string} item -Storage item
+ * @returns
+ */
+function getStorage(item) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(item, (res) => {
+      resolve(res[item]);
+    });
+  });
+}
