@@ -28,7 +28,6 @@ const newHTML = `<html>
  * Set the blocked file types in the storage
  */
 chrome.storage.managed.get('blocktypes', function (data) {
-  data.type = 'blocktypes';
   chrome.storage.local.set(data);
 });
 
@@ -71,7 +70,7 @@ async function checkUrl(res) {
     }
   })
   if (!block) return;
-  chrome.tabs.remove(res.tabId);
+  chrome.tabs.remove(res.id);
   const newurl = "data:text/html," + encodeURIComponent(newHTML);
   chrome.tabs.create({ url: newurl });
 }

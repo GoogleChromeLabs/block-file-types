@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Block File Types",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Clay Smith",
   "short_name": "Block File Types",
   "default_locale": "en",
@@ -14,7 +14,10 @@
     "64": "images/64.png",
     "128": "images/128.png"
   },
-  "permissions": [],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
   "host_permissions": [
     "file://*"
   ],
