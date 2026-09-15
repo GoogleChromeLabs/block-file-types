@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Block File Types",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Clay Smith",
   "short_name": "Block File Types",
   "default_locale": "en",
